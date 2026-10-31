@@ -1,0 +1,519 @@
+/* ==========================================================================
+   魔法森林寻宝 —— 样式表
+   所有样式均通过类选择器定义，无任何内联样式。
+   ========================================================================== */
+
+:root {
+  --bg: #0e1116;
+  --bg-panel: #171c24;
+  --bg-tile: #1d3324;
+  --text: #e8e3d5;
+  --text-dim: #9aa3ad;
+  --gold: #e6b84a;
+  --green: #4caf73;
+  --red: #d9535e;
+  --blue: #5aa7e0;
+  --border: #2a3340;
+  --radius: 12px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  font-family: "Segoe UI", "Microsoft YaHei", system-ui, sans-serif;
+  background: radial-gradient(circle at 50% 20%, #1b2230 0%, var(--bg) 70%);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+#app {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+/* ==========================================================================
+   画面切换
+   ========================================================================== */
+
+.screen {
+  display: none;
+}
+
+.screen--active {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  animation: fade-in 0.5s ease both;
+}
+
+/* ==========================================================================
+   欢迎画面
+   ========================================================================== */
+
+.welcome__hero {
+  width: 100%;
+  max-height: 320px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+}
+
+.welcome__body {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.welcome__title {
+  margin: 0;
+  font-size: 2.6rem;
+  letter-spacing: 2px;
+  color: var(--gold);
+  animation: float 3s ease-in-out infinite;
+  text-shadow: 0 4px 18px rgba(230, 184, 74, 0.45);
+}
+
+.welcome__subtitle {
+  margin: 0;
+  color: var(--text-dim);
+}
+
+.welcome__story {
+  max-width: 560px;
+  margin: 0;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+.welcome__hint {
+  max-width: 560px;
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   按钮
+   ========================================================================== */
+
+.btn {
+  font: inherit;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  color: var(--text);
+  background: var(--bg-panel);
+  transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+
+.btn--primary {
+  background: var(--gold);
+  color: #231a05;
+  border-color: transparent;
+  font-weight: 700;
+}
+
+.btn--ghost {
+  background: transparent;
+}
+
+/* ==========================================================================
+   HUD
+   ========================================================================== */
+
+.hud {
+  width: 100%;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.hud__row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.hud__label {
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.hud__health {
+  font-variant-numeric: tabular-nums;
+}
+
+.hud__position {
+  margin-left: auto;
+  color: var(--text-dim);
+  font-size: 0.9rem;
+}
+
+.hud__objective {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 0.9rem;
+}
+
+.health {
+  flex: 1;
+  min-width: 120px;
+  height: 16px;
+  appearance: none;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #2b1f1f;
+}
+
+.health::-webkit-progress-bar {
+  background: #2b1f1f;
+}
+
+.health::-webkit-progress-value {
+  background: var(--green);
+  transition: background 0.3s ease;
+}
+
+.health::-moz-progress-bar {
+  background: var(--green);
+}
+
+.health.health--low::-webkit-progress-value {
+  background: var(--red);
+}
+
+.health.health--low::-moz-progress-bar {
+  background: var(--red);
+}
+
+/* ==========================================================================
+   地图
+   ========================================================================== */
+
+.map {
+  width: 100%;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.map--shake {
+  animation: shake 0.45s ease;
+}
+
+.map__row {
+  display: flex;
+  gap: 6px;
+}
+
+.tile {
+  flex: 1 1 0;
+  aspect-ratio: 1 / 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(16px, 4vw, 30px);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-tile);
+  transition: transform 0.12s ease, box-shadow 0.2s ease;
+}
+
+.tile__symbol {
+  line-height: 1;
+}
+
+.tile__item {
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+  font-size: 0.55em;
+}
+
+.tile--walkable:hover {
+  transform: scale(1.06);
+}
+
+.tile--blocked {
+  background: #3a2f1c;
+  border-color: var(--gold);
+  animation: pulse 1.8s ease-in-out infinite;
+}
+
+.tile--danger {
+  background: #3a1f22;
+  border-color: var(--red);
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+.tile--player {
+  background: #1d3a55;
+  border-color: var(--blue);
+  box-shadow: 0 0 14px rgba(90, 167, 224, 0.7);
+  animation: float 2.4s ease-in-out infinite;
+}
+
+/* ==========================================================================
+   消息与面板
+   ========================================================================== */
+
+.panel {
+  width: 100%;
+  display: flex;
+  gap: 14px;
+  align-items: stretch;
+}
+
+.panel__log {
+  flex: 1;
+  min-width: 0;
+}
+
+.panel__side {
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.panel__title {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  color: var(--gold);
+}
+
+.messages {
+  height: 220px;
+  overflow-y: auto;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+}
+
+.message {
+  margin: 0 0 6px;
+  line-height: 1.5;
+  animation: slide-in 0.35s ease both;
+}
+
+.inventory {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px;
+}
+
+.inventory__list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.inventory__empty {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+}
+
+.inventory__item {
+  font: inherit;
+  text-align: left;
+  padding: 7px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.inventory__item:hover {
+  background: #222a36;
+}
+
+/* ==========================================================================
+   方向键 / 指令 / 工具栏
+   ========================================================================== */
+
+.dpad {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.dpad__btn {
+  font: inherit;
+  padding: 10px 0;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.dpad__btn:hover {
+  background: #222a36;
+}
+
+.command {
+  width: 100%;
+  display: flex;
+  gap: 8px;
+}
+
+.command__input {
+  flex: 1;
+  font: inherit;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg-panel);
+  color: var(--text);
+}
+
+.command__input:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+
+.toolbar {
+  width: 100%;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   结束画面
+   ========================================================================== */
+
+.end__title {
+  margin: 40px 0 0;
+  font-size: 2.4rem;
+  color: var(--gold);
+  animation: float 3s ease-in-out infinite;
+}
+
+.end__message {
+  color: var(--text-dim);
+}
+
+/* ==========================================================================
+   CSS 动画（共 5 种，均通过类选择器触发）
+   ========================================================================== */
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(217, 83, 94, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 14px 4px rgba(217, 83, 94, 0.5);
+  }
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-8px);
+  }
+  40% {
+    transform: translateX(8px);
+  }
+  60% {
+    transform: translateX(-6px);
+  }
+  80% {
+    transform: translateX(6px);
+  }
+}
+
+/* ==========================================================================
+   响应式：窄屏时面板纵向堆叠
+   ========================================================================== */
+
+@media (max-width: 640px) {
+  .panel {
+    flex-direction: column;
+  }
+
+  .panel__side {
+    width: 100%;
+  }
+
+  .welcome__title {
+    font-size: 2rem;
+  }
+}

@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>魔法森林寻宝 · 网页冒险游戏</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 欢迎画面 -->
+      <section id="screen-welcome" class="screen screen--active">
+        <img class="welcome__hero" src="/assets/hero.jpg" alt="魔法森林插画" />
+        <div class="welcome__body">
+          <h1 class="welcome__title">魔法森林寻宝</h1>
+          <p class="welcome__subtitle">一个用键盘游玩的网页冒险游戏</p>
+          <p class="welcome__story">
+            魔法水晶被藏在了森林尽头的城堡里。找到 <strong>城堡钥匙</strong> 打开大门，
+            避开 <strong>怪物</strong> 与 <strong>沼泽</strong>，拾取 <strong>魔法水晶</strong> 完成任务。
+          </p>
+          <button id="btn-start" class="btn btn--primary" type="button">开始冒险</button>
+          <p class="welcome__hint">
+            提示：方向键 / WASD 移动 · E 拾取 · 数字键使用物品 · I 查看背包 · L 观察四周 · 也可在下方输入指令
+          </p>
+          <button id="btn-fullscreen-welcome" class="btn btn--ghost" type="button">切换全屏</button>
+        </div>
+      </section>
+
+      <!-- 游戏画面 -->
+      <section id="screen-game" class="screen">
+        <header class="hud">
+          <div class="hud__row">
+            <span class="hud__label">勇者 🧙</span>
+            <progress id="health-bar" class="health" max="100" value="100"></progress>
+            <span id="health-text" class="hud__health">100 / 100</span>
+            <span id="position" class="hud__position">位置 (—, —)</span>
+          </div>
+          <p id="objective" class="hud__objective"></p>
+        </header>
+
+        <div id="map" class="map" role="grid" aria-label="游戏地图"></div>
+
+        <div class="panel">
+          <div class="panel__log">
+            <div id="messages" class="messages" aria-live="polite"></div>
+          </div>
+          <div class="panel__side">
+            <div class="inventory">
+              <h2 class="panel__title">背包</h2>
+              <div id="inventory" class="inventory__list"></div>
+            </div>
+            <div class="dpad" aria-label="移动控制">
+              <button class="dpad__btn" data-command="north" type="button">▲</button>
+              <button class="dpad__btn" data-command="west" type="button">◀</button>
+              <button class="dpad__btn" data-command="pick" type="button">拾取</button>
+              <button class="dpad__btn" data-command="east" type="button">▶</button>
+              <button class="dpad__btn" data-command="south" type="button">▼</button>
+            </div>
+          </div>
+        </div>
+
+        <form id="command-form" class="command">
+          <input
+            id="command-input"
+            class="command__input"
+            type="text"
+            placeholder="输入指令，如 use 治愈药水 / look / inventory"
+            autocomplete="off"
+          />
+          <button class="btn btn--primary" type="submit">执行</button>
+        </form>
+
+        <div class="toolbar">
+          <button id="btn-save" class="btn btn--ghost" type="button">保存</button>
+          <button id="btn-load" class="btn btn--ghost" type="button">读取</button>
+          <button id="btn-fullscreen-game" class="btn btn--ghost" type="button">全屏</button>
+          <button id="btn-restart" class="btn btn--ghost" type="button">重新开始</button>
+        </div>
+      </section>
+
+      <!-- 结束画面 -->
+      <section id="screen-end" class="screen">
+        <h2 id="end-title" class="end__title"></h2>
+        <p id="end-message" class="end__message"></p>
+        <button id="btn-again" class="btn btn--primary" type="button">再玩一次</button>
+      </section>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
