@@ -1,5 +1,7 @@
 # 魔法森林寻宝 · Magic Forest Quest
 
+**中文** | [English](README.en.md)
+
 一个使用键盘操作的网页冒险游戏（Assignment 2）。在随机生成的魔法森林中探索，找到钥匙打开城堡、用道具对抗危险，最终拾取 **魔法水晶 💎** 完成冒险。
 
 **🎮 在线试玩：** <https://gushenle.github.io/magic-forest-quest/>
